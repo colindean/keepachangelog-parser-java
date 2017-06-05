@@ -4,11 +4,13 @@
 package cx.cad.keepachangelog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ChangelogSection {
+public class ChangelogSection implements Comparable<ChangelogSection> {
     private String name;
     private List<String> items = new ArrayList<>();
+    private static List<String> ordering = Arrays.asList("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security");
 
     public ChangelogSection(String name, List<String> items) {
         this.name = name;
@@ -20,5 +22,19 @@ public class ChangelogSection {
     }
     public List<String> getItems() {
         return items;
+    }
+
+    private Integer nameOrder() {
+        int position = ordering.indexOf(getName());
+        if(position == -1) {
+            return 99;
+        } else {
+            return position;
+        }
+    }
+
+    @Override
+    public int compareTo(ChangelogSection other) {
+        return nameOrder().compareTo(other.nameOrder());
     }
 }

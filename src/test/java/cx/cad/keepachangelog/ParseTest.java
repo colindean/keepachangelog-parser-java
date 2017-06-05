@@ -8,6 +8,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Set;
 
 @RunWith(JUnit4.class)
 public class ParseTest {
@@ -50,6 +51,16 @@ public class ParseTest {
         Iterator<ChangelogEntry> it = data.getEntries().iterator();
         Assert.assertTrue(it.hasNext());
         Assert.assertEquals("1.1.0", it.next().getVersion());
+    }
+    @Test public void test_parser_gets_three_sections_for_1p0p0() {
+        ChangelogParser parser = a_parser();
+        ChangelogData data = parser.parse(TestChangelogs.BASIC);
+        ChangelogEntry[] entries = data.getEntries().toArray(new ChangelogEntry[0]);
+        ChangelogEntry lastEntry = entries[entries.length-1];
+        Assert.assertEquals("1.0.0", lastEntry.getVersion());
+        Assert.assertEquals(3, lastEntry.getSections().size());
+        ChangelogSection[] sections = lastEntry.getSections().toArray(new ChangelogSection[0]);
+        Assert.assertEquals(2, sections[1].getItems().size());
     }
 
 

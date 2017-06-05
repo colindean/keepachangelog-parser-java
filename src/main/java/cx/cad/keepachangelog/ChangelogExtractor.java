@@ -3,13 +3,11 @@
  */
 package cx.cad.keepachangelog;
 
-import com.vladsch.flexmark.ast.Document;
-import com.vladsch.flexmark.ast.Heading;
-import com.vladsch.flexmark.ast.Node;
-import com.vladsch.flexmark.ast.Paragraph;
+import com.vladsch.flexmark.ast.*;
 import com.vladsch.flexmark.ast.util.HeadingCollectingVisitor;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -89,6 +87,45 @@ public class ChangelogExtractor {
             throw new MalformedChangelogException(e);
         }
 
-        return builder.build();
+        Node next = heading.getNext();
+
+        String description = null;
+
+        while(next != null && !isAHeading2(next)) {
+            if(isAParagraph(next)) {
+                Paragraph paragraph = (Paragraph) next;
+                description = ((Paragraph) next).getContentChars().unescape();
+                next = paragraph.getNext();
+            } else
+            if(isHeading3(next)) {
+                Heading sectionHeading = (Heading) next;
+                String name = sectionHeading.getText().unescape();
+                BulletList list = (BulletList) sectionHeading.getNextAny(BulletList.class);
+                ArrayList<String> items = new ArrayList<>(5);
+                list.getChildren().forEach(item -> {
+                    BulletListItem blItem = (BulletListItem) item;
+                    items.add(blItem.getContentChars().unescape());
+                });
+                builder.addSection(new ChangelogSection(name, items));
+                next = next.getNext();
+            } else {
+                next = next.getNext();
+            }
+        }
+
+        return builder.description(description).build();
+    }
+
+    private boolean isAHeading2(Node node) {
+        return isHeadingLevel(node, 2);
+    }
+    private boolean isHeading3(Node node) {
+        return isHeadingLevel(node, 3);
+    }
+    private boolean isHeadingLevel(Node node, int level) {
+        return node.isOrDescendantOfType(Heading.class) && ((Heading)node).getLevel() == level;
+    }
+    private boolean isAParagraph(Node node) {
+        return node.isOrDescendantOfType(Paragraph.class);
     }
 }

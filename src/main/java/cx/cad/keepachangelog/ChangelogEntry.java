@@ -16,10 +16,12 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
     private Version version;
     private Date date;
     private Set<ChangelogSection> sections = new TreeSet<>();
+    private String description;
 
-    private ChangelogEntry(Version version, Date date, Set<ChangelogSection> sections) {
+    private ChangelogEntry(Version version, Date date, String description, Set<ChangelogSection> sections) {
         this.version = version;
         this.date = date;
+        this.description = description;
         this.sections.addAll(sections);
     }
 
@@ -32,6 +34,7 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
     public Set<ChangelogSection> getSections() {
         return sections;
     }
+    public String getDescription() { return description; }
 
     @Override
     public int compareTo(ChangelogEntry o) {
@@ -40,9 +43,10 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
     private int descendingOrder(int i) { return -i; }
 
     public static class Builder {
-        Version version;
-        Date date;
-        Set<ChangelogSection> sections = new TreeSet<>();
+        private Version version;
+        private Date date;
+        private Set<ChangelogSection> sections = new TreeSet<>();
+        private String description;
 
         static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -56,12 +60,16 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
             this.date = dateFormat.parse(date);
             return this;
         }
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
         public Builder addSection(ChangelogSection section) {
             sections.add(section);
             return this;
         }
         public ChangelogEntry build() {
-            return new ChangelogEntry(version, date, sections);
+            return new ChangelogEntry(version, date,description, sections);
         }
     }
 }
