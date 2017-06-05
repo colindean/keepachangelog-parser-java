@@ -35,8 +35,9 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
 
     @Override
     public int compareTo(ChangelogEntry o) {
-        return version.compareTo(o.version);
+        return descendingOrder(version.compareTo(o.version));
     }
+    private int descendingOrder(int i) { return -i; }
 
     public static class Builder {
         Version version;

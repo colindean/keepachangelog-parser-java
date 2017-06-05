@@ -49,7 +49,7 @@ public class ParseTest {
         ChangelogData data = parser.parse(TestChangelogs.BASIC);
         Iterator<ChangelogEntry> it = data.getEntries().iterator();
         Assert.assertTrue(it.hasNext());
-        Assert.assertEquals("1.0.0", it.next().getVersion());
+        Assert.assertEquals("1.1.0", it.next().getVersion());
     }
 
 
