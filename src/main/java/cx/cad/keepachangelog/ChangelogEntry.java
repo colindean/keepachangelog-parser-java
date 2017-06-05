@@ -3,6 +3,8 @@
  */
 package cx.cad.keepachangelog;
 
+import com.github.zafarkhaja.semver.Version;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,19 +12,19 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ChangelogEntry {
-    private String version; //XXX this should be some kind of real semver object that has equality and comparison
+public class ChangelogEntry implements Comparable<ChangelogEntry> {
+    private Version version;
     private Date date;
     private Set<ChangelogSection> sections = new TreeSet<>();
 
-    private ChangelogEntry(String version, Date date, Set<ChangelogSection> sections) {
+    private ChangelogEntry(Version version, Date date, Set<ChangelogSection> sections) {
         this.version = version;
         this.date = date;
         this.sections.addAll(sections);
     }
 
     public String getVersion() {
-        return version;
+        return version.toString();
     }
     public Date getDate() {
         return date;
@@ -31,8 +33,13 @@ public class ChangelogEntry {
         return sections;
     }
 
+    @Override
+    public int compareTo(ChangelogEntry o) {
+        return version.compareTo(o.version);
+    }
+
     public static class Builder {
-        String version = "";
+        Version version;
         Date date;
         Set<ChangelogSection> sections = new TreeSet<>();
 
@@ -41,7 +48,7 @@ public class ChangelogEntry {
         public Builder() {}
 
         public Builder version(String version) {
-            this.version = version;
+            this.version = Version.valueOf(version);
             return this;
         }
         public Builder date(String date) throws ParseException {
