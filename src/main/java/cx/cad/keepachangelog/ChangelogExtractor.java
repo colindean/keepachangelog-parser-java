@@ -31,8 +31,7 @@ public class ChangelogExtractor {
     }
     private String getFirstHeadingText(Node mdNode) {
         Heading heading = (Heading) mdNode.getFirstChildAny(Heading.class);
-        Text text = (Text) heading.getFirstChildAny(Text.class);
-        return nodeToString(text);
+        return heading.getText().unescape();
     }
 
     public String getDescription() {
