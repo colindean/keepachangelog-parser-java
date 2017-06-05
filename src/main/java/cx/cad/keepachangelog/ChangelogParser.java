@@ -6,15 +6,18 @@ import com.vladsch.flexmark.parser.Parser;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.Set;
 
 public class ChangelogParser {
     public ChangelogData parse(String markdownText) {
         Node mdNode = getMarkdownAst(markdownText);
+
         ChangelogExtractor extractor = ChangelogExtractor.withDocumentNode(mdNode);
         String projectName = extractor.getProjectName();
         String description = extractor.getDescription();
+        Set<ChangelogEntry> entries = extractor.getEntries();
 
-        return new ChangelogData(projectName, description, new HashSet<>());
+        return new ChangelogData(projectName, description, entries);
     }
     public ChangelogData parse(File file) {
         String text = FileTools.readFile(file);

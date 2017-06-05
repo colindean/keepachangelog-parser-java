@@ -5,16 +5,17 @@ package cx.cad.keepachangelog;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ChangelogEntry {
-    private String version;
+    private String version; //XXX this should be some kind of real semver object that has equality and comparison
     private Date date;
-    private Set<ChangelogSection> sections = new HashSet<ChangelogSection>();
+    private Set<ChangelogSection> sections = new TreeSet<>();
 
-    public ChangelogEntry(String version, Date date, Set<ChangelogSection> sections) {
+    private ChangelogEntry(String version, Date date, Set<ChangelogSection> sections) {
         this.version = version;
         this.date = date;
         this.sections.addAll(sections);
@@ -30,22 +31,29 @@ public class ChangelogEntry {
         return sections;
     }
 
-    public class Builder {
+    public static class Builder {
         String version = "";
         Date date;
-        Set<ChangelogSection> sections = new HashSet<ChangelogSection>();
+        Set<ChangelogSection> sections = new TreeSet<>();
+
+        static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        public Builder() {}
 
         public Builder version(String version) {
             this.version = version;
             return this;
         }
         public Builder date(String date) throws ParseException {
-            this.date = DateFormat.getDateInstance().parse(date);
+            this.date = dateFormat.parse(date);
             return this;
         }
         public Builder addSection(ChangelogSection section) {
             sections.add(section);
             return this;
+        }
+        public ChangelogEntry build() {
+            return new ChangelogEntry(version, date, sections);
         }
     }
 }

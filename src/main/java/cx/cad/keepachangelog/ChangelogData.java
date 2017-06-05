@@ -6,7 +6,7 @@ import java.util.Set;
 public class ChangelogData {
     private String projectName = "";
     private String description = "";
-    private Set<ChangelogEntry> entries = new HashSet<ChangelogEntry>();
+    private Set<ChangelogEntry> entries = new HashSet<ChangelogEntry>(); //XXX this should be an ordered set
 
 
     public ChangelogData(String projectName, String description, Set<ChangelogEntry> entries) {
