@@ -5,7 +5,6 @@ import com.vladsch.flexmark.ast.Node;
 import com.vladsch.flexmark.parser.Parser;
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.Set;
 
 public class ChangelogParser {

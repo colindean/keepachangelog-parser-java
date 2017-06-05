@@ -1,12 +1,12 @@
 package cx.cad.keepachangelog;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ChangelogData {
     private String projectName = "";
     private String description = "";
-    private Set<ChangelogEntry> entries = new HashSet<ChangelogEntry>(); //XXX this should be an ordered set
+    private Set<ChangelogEntry> entries = new TreeSet<>();
 
 
     public ChangelogData(String projectName, String description, Set<ChangelogEntry> entries) {
