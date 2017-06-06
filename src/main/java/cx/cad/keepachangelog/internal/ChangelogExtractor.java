@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cx.cad.keepachangelog;
+package cx.cad.keepachangelog.internal;
 
 import com.vladsch.flexmark.ast.*;
 import com.vladsch.flexmark.ast.util.HeadingCollectingVisitor;
+import cx.cad.keepachangelog.ChangelogEntry;
+import cx.cad.keepachangelog.ChangelogSection;
+import cx.cad.keepachangelog.MalformedChangelogException;
+import cx.cad.keepachangelog.MissingHeaderException;
 
 import java.text.ParseException;
 import java.util.ArrayList;

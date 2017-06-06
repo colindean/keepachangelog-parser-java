@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cx.cad.keepachangelog;
+package cx.cad.keepachangelog.internal;
 
 import java.io.File;
 import java.io.IOException;

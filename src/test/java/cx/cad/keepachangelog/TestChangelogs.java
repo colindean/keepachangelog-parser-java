@@ -18,8 +18,8 @@ package cx.cad.keepachangelog;
 import java.io.File;
 import java.util.Arrays;
 
-import static cx.cad.keepachangelog.FileTools.listToPath;
-import static cx.cad.keepachangelog.FileTools.readFile;
+import static cx.cad.keepachangelog.internal.FileTools.listToPath;
+import static cx.cad.keepachangelog.internal.FileTools.readFile;
 
 public class TestChangelogs {
     private static final String RESOURCES_DIRECTORY = listToPath(Arrays.asList("src", "test", "resources"));
