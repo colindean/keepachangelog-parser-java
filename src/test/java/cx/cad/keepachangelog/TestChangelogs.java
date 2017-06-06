@@ -25,6 +25,7 @@ public class TestChangelogs {
     private static final String RESOURCES_DIRECTORY = listToPath(Arrays.asList("src", "test", "resources"));
     public static final String BASIC = readTestFile("CHANGELOG-basic.md");
     public static final String UNRELEASED = readTestFile("CHANGELOG-withUnreleased.md");
+    public static final String YANKED = readTestFile("CHANGELOG-withYanked.md");
 
     private static String readTestFile(String testFileName) {
         String filename = listToPath(Arrays.asList(RESOURCES_DIRECTORY, testFileName));

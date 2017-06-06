@@ -25,17 +25,20 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class ChangelogEntry implements Comparable<ChangelogEntry> {
+    static public String EXPECTED_DATE_FORMAT = "yyyy-MM-dd";
     private Version version;
     private Date date;
     private Set<ChangelogSection> sections = new TreeSet<>();
     private String description;
     private boolean isUnreleased;
+    private boolean wasYanked;
 
-    private ChangelogEntry(Version version, Date date, String description, boolean isUnreleased, Set<ChangelogSection> sections) {
+    private ChangelogEntry(Version version, Date date, String description, boolean isUnreleased, boolean wasYanked, Set<ChangelogSection> sections) {
         this.version = version;
         this.date = date;
         this.description = description;
         this.isUnreleased = isUnreleased;
+        this.wasYanked = wasYanked;
         this.sections.addAll(sections);
     }
 
@@ -50,6 +53,9 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
     }
     public String getDescription() { return description; }
     public boolean isUnreleased() { return isUnreleased; }
+    public boolean wasYanked() {
+        return wasYanked;
+    }
 
     @Override
     public int compareTo(ChangelogEntry o) {
@@ -72,8 +78,9 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
         private Set<ChangelogSection> sections = new TreeSet<>();
         private String description;
         private boolean isUnreleased;
+        private boolean wasYanked;
 
-        static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        public static DateFormat dateFormat = new SimpleDateFormat(EXPECTED_DATE_FORMAT);
 
         public Builder() {}
 
@@ -103,8 +110,12 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
             isUnreleased = true;
             return this;
         }
+        public Builder wasYanked() {
+            wasYanked = true;
+            return this;
+        }
         public ChangelogEntry build() {
-            return new ChangelogEntry(version, date, description, isUnreleased, sections);
+            return new ChangelogEntry(version, date, description, isUnreleased, wasYanked, sections);
         }
     }
 }

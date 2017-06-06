@@ -94,9 +94,15 @@ public class ChangelogExtractor {
         String text = heading.getText().unescape();
         String[] versionAndDate = extractVersionAndDateFromHeadingText(text);
         String version = versionAndDate[0];
-        String date = versionAndDate[1];
+        String dateAndYanked = versionAndDate[1];
+        boolean wasYanked = dateAndYanked != null && dateAndYanked.contains("[YANKED]");
+        String date = dateAndYanked != null ? dateAndYanked.substring(0, ChangelogEntry.EXPECTED_DATE_FORMAT.length()) : null;
 
         ChangelogEntry.Builder builder = new ChangelogEntry.Builder();
+
+        if(wasYanked){
+            builder = builder.wasYanked();
+        }
 
         try {
             builder = builder.version(version).date(date);
