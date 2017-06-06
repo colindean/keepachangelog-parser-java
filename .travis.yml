@@ -8,7 +8,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-  script: gradle bintrayUpload
+  script: ./gradlew bintrayUpload
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
