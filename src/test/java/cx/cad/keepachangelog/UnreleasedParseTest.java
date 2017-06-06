@@ -81,6 +81,11 @@ public class UnreleasedParseTest {
         Assert.assertEquals("1.0.0", data.getEntryForVersion("1.0.0").get().getVersion());
     }
     @Test
+    public void test_parser_sets_unreleased_property() {
+        Assert.assertTrue(data.getEntryForVersion("Unreleased").get().isUnreleased());
+        Assert.assertFalse(data.getEntryForVersion("1.0.0").get().isUnreleased());
+    }
+    @Test
     public void test_parser_does_not_get_specific_version_when_missing() {
         Assert.assertEquals(Optional.empty(), data.getEntryForVersion("9.1.1"));
     }
