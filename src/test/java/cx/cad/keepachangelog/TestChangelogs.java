@@ -24,6 +24,7 @@ import static cx.cad.keepachangelog.internal.FileTools.readFile;
 public class TestChangelogs {
     private static final String RESOURCES_DIRECTORY = listToPath(Arrays.asList("src", "test", "resources"));
     public static final String BASIC = readTestFile("CHANGELOG-basic.md");
+    public static final String UNRELEASED = readTestFile("CHANGELOG-withUnreleased.md");
 
     private static String readTestFile(String testFileName) {
         String filename = listToPath(Arrays.asList(RESOURCES_DIRECTORY, testFileName));

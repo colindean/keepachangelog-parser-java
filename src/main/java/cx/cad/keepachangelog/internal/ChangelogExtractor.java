@@ -24,6 +24,7 @@ import cx.cad.keepachangelog.MissingHeaderException;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -91,7 +92,7 @@ public class ChangelogExtractor {
         if(heading.getLevel() != 2) throw new IllegalArgumentException(String.format("Heading [%s] is not a second-level heading.", heading.getText().unescape()));
 
         String text = heading.getText().unescape();
-        String[] versionAndDate = text.split(VERSION_AND_DATE_SEPARATOR);
+        String[] versionAndDate = extractVersionAndDateFromHeadingText(text);
         String version = versionAndDate[0];
         String date = versionAndDate[1];
 
@@ -135,6 +136,11 @@ public class ChangelogExtractor {
         }
 
         return builder.description(description).build();
+    }
+
+    private String[] extractVersionAndDateFromHeadingText(String text) {
+        String[] split = text.split(VERSION_AND_DATE_SEPARATOR);
+        return Arrays.copyOf(split, 2);
     }
 
     private boolean isAHeading2(Node node) {

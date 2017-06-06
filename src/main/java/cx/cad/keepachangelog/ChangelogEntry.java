@@ -29,16 +29,18 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
     private Date date;
     private Set<ChangelogSection> sections = new TreeSet<>();
     private String description;
+    private boolean isUnreleased;
 
-    private ChangelogEntry(Version version, Date date, String description, Set<ChangelogSection> sections) {
+    private ChangelogEntry(Version version, Date date, String description, boolean isUnreleased, Set<ChangelogSection> sections) {
         this.version = version;
         this.date = date;
         this.description = description;
+        this.isUnreleased = isUnreleased;
         this.sections.addAll(sections);
     }
 
     public String getVersion() {
-        return version.toString();
+        return isUnreleased ? "Unreleased" : version.toString();
     }
     public Date getDate() {
         return date;
@@ -47,9 +49,19 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
         return sections;
     }
     public String getDescription() { return description; }
+    public boolean isUnreleased() { return isUnreleased; }
 
     @Override
     public int compareTo(ChangelogEntry o) {
+        if(isUnreleased || o.isUnreleased) {
+            if(isUnreleased && !o.isUnreleased){
+                return -1;
+            }
+            if(isUnreleased){
+                return 0;
+            }
+            return 1;
+        }
         return descendingOrder(version.compareTo(o.version));
     }
     private int descendingOrder(int i) { return -i; }
@@ -59,17 +71,24 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
         private Date date;
         private Set<ChangelogSection> sections = new TreeSet<>();
         private String description;
+        private boolean isUnreleased;
 
         static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         public Builder() {}
 
         public Builder version(String version) {
-            this.version = Version.valueOf(version);
-            return this;
+            if(version == null || "Unreleased".equals(version)){
+                return setUnreleased();
+            } else {
+                this.version = Version.valueOf(version);
+                return this;
+            }
         }
         public Builder date(String date) throws ParseException {
-            this.date = dateFormat.parse(date);
+            if(date != null) {
+                this.date = dateFormat.parse(date);
+            }
             return this;
         }
         public Builder description(String description) {
@@ -80,8 +99,12 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
             sections.add(section);
             return this;
         }
+        public Builder setUnreleased() {
+            isUnreleased = true;
+            return this;
+        }
         public ChangelogEntry build() {
-            return new ChangelogEntry(version, date,description, sections);
+            return new ChangelogEntry(version, date, description, isUnreleased, sections);
         }
     }
 }
