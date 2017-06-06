@@ -15,5 +15,8 @@
  */
 package cx.cad.keepachangelog;
 
+/**
+ * Thrown when the changelog Markdown does not have a top-level heading.
+ */
 public class MissingHeaderException extends RuntimeException {
 }

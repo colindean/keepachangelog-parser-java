@@ -24,7 +24,19 @@ import cx.cad.keepachangelog.internal.FileTools;
 import java.io.File;
 import java.util.Set;
 
+/**
+ * ChangelogParser is thread-safe. Each uses its own instance of a Markdown
+ * parser on-demand.
+ *
+ * {@link ChangelogData} models the entire changelog document.
+ */
 public class ChangelogParser {
+    /**
+     * Parse a changelog's Markdown text as a String
+     *
+     * @param markdownText changelog text in Markdown format
+     * @return a model of the changelog
+     */
     public ChangelogData parse(String markdownText) {
         Node mdNode = getMarkdownAst(markdownText);
 
@@ -35,6 +47,13 @@ public class ChangelogParser {
 
         return new ChangelogData(projectName, description, entries);
     }
+
+    /**
+     * Parse a changelog's Markdown text from a file
+     *
+     * @param file the file to read and parse
+     * @return a model of the changelog
+     */
     public ChangelogData parse(File file) {
         String text = FileTools.readFile(file);
         return parse(text);

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Set some Jar manifest attributes
 * Significantly more tests to support new features, cleaned up tests for easier
   management of code.
+* Documentation
 
 ### Changed
 

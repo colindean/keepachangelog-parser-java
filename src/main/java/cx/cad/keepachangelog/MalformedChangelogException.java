@@ -15,6 +15,10 @@
  */
 package cx.cad.keepachangelog;
 
+/**
+ * Thrown when a {@link ChangelogEntry} cannot be created because some text
+ * expected to be in a certain format is not and is thus unable to be parsed.
+ */
 public class MalformedChangelogException extends RuntimeException {
     public MalformedChangelogException(String message, Throwable e) {
         super(message, e);

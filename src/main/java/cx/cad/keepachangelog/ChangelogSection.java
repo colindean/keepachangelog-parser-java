@@ -19,19 +19,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A {@link ChangelogEntry} contains at least one ChangelogSection describing
+ * some change made to the software inside the release that the entry describes.
+ */
 public class ChangelogSection implements Comparable<ChangelogSection> {
     private String name;
     private List<String> items = new ArrayList<>();
     private static List<String> ordering = Arrays.asList("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security");
 
+    /**
+     * Creates a new ChangelogSection.
+     *
+     * Names should be one of:
+     *
+     *     "Added", "Changed", "Deprecated", "Removed", "Fixed", or "Security"
+     *
+     * @param name the name of the section
+     * @param items descriptions of things that changed about the program in this version
+     */
     public ChangelogSection(String name, List<String> items) {
         this.name = name;
         this.items.addAll(items);
     }
 
+    /**
+     * @return the name of the section
+     */
     public String getName() {
         return name;
     }
+    /**
+     * @return the items in the section
+     */
     public List<String> getItems() {
         return items;
     }
@@ -45,6 +65,14 @@ public class ChangelogSection implements Comparable<ChangelogSection> {
         }
     }
 
+    /**
+     * Compares two sections. Sections are most likely ordered by the
+     * recommended name order provided in the constructor docs. Any section not
+     * in that list will follow those that are.
+     *
+     * @param other the other section
+     * @return -1, 0, 1 for ordering in the list
+     */
     @Override
     public int compareTo(ChangelogSection other) {
         return nameOrder().compareTo(other.nameOrder());
