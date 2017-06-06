@@ -16,6 +16,9 @@ To us this in your project, include the dependency:
 Gradle:
 
 ```groovy
+repositories {
+  jcenter()
+}
 dependencies {
     compile group: 'cx.cad.keepachangelog', name: 'changelog-parser', version: '<look it up!>'
 }
@@ -24,6 +27,7 @@ dependencies {
 Maven:
 
 ```xml
+<!-- Ensure that JCenter is already added as a repository. -->
 <dependency>
     <groupId>cx.cad.keepachangelog</groupId>
     <artifactId>changelog-parser</artifactId>
