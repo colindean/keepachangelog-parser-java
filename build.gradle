@@ -115,3 +115,11 @@ bintray {
     }
   }
 }
+
+jar {
+  manifest {
+    attributes 'Implementation-Title': 'keepachangelog-parser-java',
+               'Implementation-Version': version,
+               'Implementation-Vendor': 'Colin Dean'
+  }
+}
