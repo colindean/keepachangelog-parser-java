@@ -8,6 +8,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 @RunWith(JUnit4.class)
 public class ParseTest {
@@ -59,7 +60,20 @@ public class ParseTest {
         Assert.assertEquals("1.0.0", lastEntry.getVersion());
         Assert.assertEquals(3, lastEntry.getSections().size());
         ChangelogSection[] sections = lastEntry.getSections().toArray(new ChangelogSection[0]);
-        Assert.assertEquals(2, sections[1].getItems().size());
+        List<String> items = sections[1].getItems();
+        Assert.assertEquals(2, items.size());
+    }
+
+    @Test
+    public void test_parser_gets_changed_content() {
+        ChangelogParser parser = a_parser();
+        ChangelogData data = parser.parse(TestChangelogs.BASIC);
+        ChangelogEntry[] entries = data.getEntries().toArray(new ChangelogEntry[0]);
+        ChangelogEntry lastEntry = entries[entries.length-1];
+        ChangelogSection[] sections = lastEntry.getSections().toArray(new ChangelogSection[0]);
+        List<String> items = sections[1].getItems();
+
+        Assert.assertTrue(items.get(0).contains("Frobnosticators"));
     }
 
 

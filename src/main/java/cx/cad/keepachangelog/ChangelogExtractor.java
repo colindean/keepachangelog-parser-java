@@ -104,7 +104,12 @@ public class ChangelogExtractor {
                 ArrayList<String> items = new ArrayList<>(5);
                 list.getChildren().forEach(item -> {
                     BulletListItem blItem = (BulletListItem) item;
-                    items.add(blItem.getContentChars().unescape());
+                    //XXX https://github.com/vsch/flexmark-java/issues/112
+                    //Paragraph paragraph = (Paragraph) blItem.getChildOfType(Paragraph.class);
+                    //Text bulletText = (Text) paragraph.getChildOfType(Text.class);
+                    Paragraph paragraph = (Paragraph) blItem.getFirstChildAny(Paragraph.class);
+                    Text bulletText = (Text) paragraph.getFirstChildAny(Text.class);
+                    items.add(bulletText.getChars().unescape());
                 });
                 builder.addSection(new ChangelogSection(name, items));
                 next = next.getNext();
