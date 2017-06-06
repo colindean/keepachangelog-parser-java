@@ -100,8 +100,13 @@ bintray {
   pkg {
     repo = 'cx.cad.keepachangelog'
     name = 'changelog-parser'
+    desc = 'A parser for keepachangelog Markdown-formatted changelogs'
     licenses = ['Apache-2.0']
+    websiteUrl = 'https://github.com/colindean/keepachangelog-parser-java'
+    issueTrackerUrl = 'https://github.com/colindean/keepachangelog-parser-java/issues'
     vcsUrl = 'https://github.com/colindean/keepachangelog-parser-java.git'
+    githubRepo = 'colindean/keepachangelog-parser-java'
+    githubReleaseNotesFile = 'README.md'
     version {
       name = project.version
       desc = "keepachangelog parser for Java ${project.version}"
