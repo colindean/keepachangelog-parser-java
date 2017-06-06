@@ -125,6 +125,7 @@ bintray {
       released  = new Date()
       vcsTag = project.version
     }
+    publish = true
   }
 }
 
