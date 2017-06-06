@@ -1,6 +1,6 @@
 buildscript {
   repositories {
-    mavenCentral()
+    jcenter()
   }
   dependencies {
     classpath group: 'com.cinnober.gradle', name: 'semver-git', version: '2.2.3'
@@ -28,7 +28,7 @@ apply plugin: 'maven-publish'
 sourceCompatibility = 1.8
 
 repositories {
-  mavenCentral()
+  jcenter()
 }
 
 dependencies {
