@@ -1,5 +1,6 @@
 package cx.cad.keepachangelog;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -23,5 +24,9 @@ public class ChangelogData {
     }
     public Set<ChangelogEntry> getEntries() {
         return entries;
+    }
+
+    public Optional<ChangelogEntry> getEntryForVersion(String version) {
+        return getEntries().stream().filter(entry -> entry.getVersion().equals(version)).findFirst();
     }
 }

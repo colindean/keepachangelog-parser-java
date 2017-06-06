@@ -9,6 +9,7 @@ import org.junit.runners.JUnit4;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(JUnit4.class)
 public class ParseTest {
@@ -74,6 +75,19 @@ public class ParseTest {
         List<String> items = sections[1].getItems();
 
         Assert.assertTrue(items.get(0).contains("Frobnosticators"));
+    }
+    @Test
+    public void test_parser_gets_specific_version() {
+        ChangelogParser parser = a_parser();
+        ChangelogData data = parser.parse(TestChangelogs.BASIC);
+        Assert.assertEquals("1.1.0", data.getEntryForVersion("1.1.0").get().getVersion());
+        Assert.assertEquals("1.0.0", data.getEntryForVersion("1.0.0").get().getVersion());
+    }
+    @Test
+    public void test_parser_does_not_get_specific_version_when_missing() {
+        ChangelogParser parser = a_parser();
+        ChangelogData data = parser.parse(TestChangelogs.BASIC);
+        Assert.assertEquals(Optional.empty(), data.getEntryForVersion("9.1.1"));
     }
 
 
