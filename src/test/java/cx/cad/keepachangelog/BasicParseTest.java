@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RunWith(JUnit4.class)
-public class ParseTest {
+public class BasicParseTest {
 
     private static final Date DATE_2017_JUNE_6 = new Date(2017 - 1900, 5, 6); //XXX this is so bad
 
