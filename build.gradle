@@ -8,7 +8,8 @@ buildscript {
 }
 
 plugins {
-  id "com.jfrog.bintray" version "1.7.3"
+  id "com.jfrog.bintray"              version "1.7.3"
+  id "com.github.hierynomus.license"  version "0.14.0"
 }
 
 ext {
@@ -122,4 +123,12 @@ jar {
                'Implementation-Version': version,
                'Implementation-Vendor': 'Colin Dean'
   }
+  from "LICENSE.md"
+}
+
+license {
+  ext.year = Calendar.getInstance().get(Calendar.YEAR)
+  ext.copyright = 'Colin Dean'
+  header = file('.copyright_header')
+  strictCheck true
 }
