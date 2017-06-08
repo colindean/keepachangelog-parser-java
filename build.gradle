@@ -72,6 +72,8 @@ def pomConfig = {
 
   scm {
     url "https://github.com/colindean/keepachangelog-parser-java"
+    connection "scm:git:https://github.com/colindean/keepachangelog-parser-java.git"
+    developerConnection "scm:git:ssh://git@github.com:colindean/keepachangelog-parser-java.git"
   }
 }
 
