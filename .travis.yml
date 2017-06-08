@@ -8,6 +8,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+    repo: colindean/keepachangelog-parser-java
   script: ./gradlew bintrayUpload
 
 before_cache:
