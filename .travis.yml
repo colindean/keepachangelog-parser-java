@@ -4,7 +4,8 @@ jdk:
   - oraclejdk8
 
 before_install:
-  - if [ ! -z "$GPG_PRIVATE_KEY" ]; then echo $GPG_PRIVATE_KEY | base64 --decode | gpg --import; fi
+  -
+  - if [ ! -z "$GPG_PRIVATE_KEY" ]; then echo $GPG_PRIVATE_KEY | base64 --decode | gpg --import --personal-cipher-preferences AES256; fi
 
 deploy:
   provider: script
