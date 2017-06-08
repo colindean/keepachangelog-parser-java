@@ -17,6 +17,11 @@ ext {
   nextVersion = "patch"
   snapshotSuffix = "SNAPSHOT"
 }
+
+ext.'signing.keyId' = System.getenv('GPG_KEY_ID')
+ext.'signing.secretKeyRingFile' = "${System.getenv('HOME')}/.gnupg/secring.gpg"
+ext.'signing.password' = System.getenv('GPG_PASSPHRASE')
+
 apply plugin: 'com.cinnober.gradle.semver-git'
 
 group 'cx.cad.keepachangelog'
@@ -25,6 +30,7 @@ apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 sourceCompatibility = 1.8
 
@@ -135,4 +141,8 @@ license {
   ext.copyright = 'Colin Dean'
   header = file('.copyright_header')
   strictCheck true
+}
+
+signing {
+  sign configurations.archives
 }
