@@ -5,7 +5,7 @@ jdk:
 
 before_install:
   -
-  - if [ ! -z "$GPG_PRIVATE_KEY" ]; then echo $GPG_PRIVATE_KEY | base64 --decode | gpg --import --personal-cipher-preferences AES256; fi
+  - if [ ! -z "$GPG_PRIVATE_KEY" ]; then echo $GPG_PRIVATE_KEY | base64 --decode | gpg --import --yes --batch; fi
 
 deploy:
   provider: script
