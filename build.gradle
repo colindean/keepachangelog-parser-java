@@ -18,6 +18,10 @@ ext {
   snapshotSuffix = "SNAPSHOT"
   isReleaseVersion = { !(project.version =~ /-SNAPSHOT$/) }
   signableTempPomFile = file("${project.buildDir}/signable-generated-pom.xml")
+
+  projectName = 'keepachangelog-parser-java'
+  githubProject = "colindean/${projectName}"
+  githubUrl = "https://github.com/${githubProject}"
 }
 
 ext.'signing.keyId' = System.getenv('GPG_KEY_ID')
@@ -83,9 +87,9 @@ def pomConfig = {
   }
 
   scm {
-    url "https://github.com/colindean/keepachangelog-parser-java"
-    connection "scm:git:https://github.com/colindean/keepachangelog-parser-java.git"
-    developerConnection "scm:git:ssh://git@github.com:colindean/keepachangelog-parser-java.git"
+    url project.ext.githubUrl
+    connection "scm:git:${project.ext.githubUrl}.git"
+    developerConnection "scm:git:ssh://git@github.com:${project.ext.githubProject}.git"
   }
 }
 
@@ -101,8 +105,8 @@ publishing {
       pom.withXml {
         def root = asNode()
         root.appendNode('description', 'A parser for keepachangelog Markdown-formatted changelogs')
-        root.appendNode('name', 'keepachangelog-parser-java')
-        root.appendNode('url', 'https://github.com/colindean/keepachangelog-parser-java')
+        root.appendNode('name', project.ext.projectName)
+        root.appendNode('url', project.ext.githubUrl)
         root.children().last() + pomConfig
       }
 
@@ -144,10 +148,10 @@ bintray {
     name = 'changelog-parser'
     desc = 'A parser for keepachangelog Markdown-formatted changelogs'
     licenses = ['Apache-2.0']
-    websiteUrl = 'https://github.com/colindean/keepachangelog-parser-java'
-    issueTrackerUrl = 'https://github.com/colindean/keepachangelog-parser-java/issues'
-    vcsUrl = 'https://github.com/colindean/keepachangelog-parser-java.git'
-    githubRepo = 'colindean/keepachangelog-parser-java'
+    websiteUrl = project.ext.githubUrl
+    issueTrackerUrl = "${project.ext.githubUrl}/issues"
+    vcsUrl = "${project.ext.githubUrl}.git"
+    githubRepo = project.ext.githubProject
     githubReleaseNotesFile = 'README.md'
     version {
       name = project.version
@@ -161,7 +165,7 @@ bintray {
 
 jar {
   manifest {
-    attributes 'Implementation-Title': 'keepachangelog-parser-java',
+    attributes 'Implementation-Title': project.ext.projectName,
                'Implementation-Version': version,
                'Implementation-Vendor': 'Colin Dean'
   }
