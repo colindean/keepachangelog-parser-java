@@ -16,7 +16,7 @@ ext {
   //semver-git config
   nextVersion = "patch"
   snapshotSuffix = "SNAPSHOT"
-  isReleaseVersion = !(project.version =~ /-SNAPSHOT$/)
+  isReleaseVersion = { !(project.version =~ /-SNAPSHOT$/) }
   signableTempPomFile = file("${project.buildDir}/signable-generated-pom.xml")
 }
 
@@ -177,5 +177,5 @@ license {
 
 signing {
   sign configurations.archives
-  required { signatory != null && project.ext.isReleaseVersion }
+  required { project.ext.isReleaseVersion() && signatory != null }
 }
