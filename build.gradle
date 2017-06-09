@@ -16,6 +16,8 @@ ext {
   //semver-git config
   nextVersion = "patch"
   snapshotSuffix = "SNAPSHOT"
+  isReleaseVersion = !(project.version =~ /-SNAPSHOT$/)
+  signableTempPomFile = file("${project.buildDir}/signable-generated-pom.xml")
 }
 
 ext.'signing.keyId' = System.getenv('GPG_KEY_ID')
@@ -99,6 +101,32 @@ publishing {
         root.appendNode('url', 'https://github.com/colindean/keepachangelog-parser-java')
         root.children().last() + pomConfig
       }
+
+      if (signing.required) {
+        // Sign the pom.xml.
+        pom.withXml {
+          writeTo(project.ext.signableTempPomFile)
+          def pomAscFile = signing.sign(project.ext.signableTempPomFile).signatureFiles[0]
+          artifact(pomAscFile) {
+            classifier = null
+            extension = 'pom.asc'
+          }
+          project.ext.signableTempPomFile.delete()
+        }
+
+        // Sign the artifacts.
+        project.tasks.signArchives.signatureFiles.each {
+          artifact(it) {
+            def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+            if (matcher.find()) {
+              classifier = matcher.group(1)
+            } else {
+              classifier = null
+            }
+            extension = 'jar.asc'
+          }
+        }
+      }
     }
   }
 }
@@ -145,4 +173,5 @@ license {
 
 signing {
   sign configurations.archives
+  required { signatory != null && project.ext.isReleaseVersion }
 }
