@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class ChangelogExtractor {
 
     public static final String VERSION_AND_DATE_SEPARATOR = " [-–—] ";
-    private Document mdNode;
+    private final Document mdNode;
 
     private ChangelogExtractor(Document node) {
         this.mdNode = node;
@@ -104,7 +104,7 @@ public class ChangelogExtractor {
 
         String text = heading.getText().unescape();
         String[] versionAndDate = extractVersionAndDateFromHeadingText(text);
-        String version = versionAndDate[0];
+        String version = versionAndDate[0].replaceAll("[\\[\\]]", "");
         String dateAndYanked = versionAndDate[1];
         boolean wasYanked = dateAndYanked != null && dateAndYanked.contains("[YANKED]");
         String date = dateAndYanked != null ? dateAndYanked.substring(0, ChangelogEntry.EXPECTED_DATE_FORMAT.length())
