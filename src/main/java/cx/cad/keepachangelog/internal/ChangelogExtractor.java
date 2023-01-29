@@ -107,7 +107,7 @@ public class ChangelogExtractor {
         try {
             builder = builder.version(version).date(date);
         } catch (ParseException e) {
-            throw new MalformedChangelogException(e);
+            throw new MalformedChangelogException(String.format("Error when processing %s", text), e);
         }
 
         Node next = heading.getNext();
