@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+* Include more details about failures when parsing versions with dates.
+
 ### Removed
 
 * Internal packages are no longer included in documentation.
