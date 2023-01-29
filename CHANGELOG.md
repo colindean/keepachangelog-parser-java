@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+* Include more details about failures when parsing versions with dates.
+
 ### Removed
 
 * Internal packages are no longer included in documentation.
@@ -55,8 +59,8 @@ This release was yanked because of a deployment problem.
 ### Added
 
 * Initial usable release.
-* Parsing any CHANGELOG.md conforming strictly to the standard but omits an 
-  `Unreleased` entry and does not use the `Yanked` tag should work.  
+* Parsing any CHANGELOG.md conforming strictly to the standard but omits an
+  `Unreleased` entry and does not use the `Yanked` tag should work.
 
 
 <!-- TEMPLATE
