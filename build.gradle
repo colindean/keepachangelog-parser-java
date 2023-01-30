@@ -9,7 +9,7 @@ buildscript {
 
 plugins {
   id "com.jfrog.bintray"              version "1.7.3"
-  id "com.github.hierynomus.license"  version "0.14.0"
+  id "com.github.hierynomus.license"  version "0.15.0"
 }
 
 ext {
@@ -107,6 +107,7 @@ license {
   ext.copyright = 'Colin Dean'
   header = file('.copyright_header')
   strictCheck true
+  skipExistingHeaders true
 }
 
 /*
