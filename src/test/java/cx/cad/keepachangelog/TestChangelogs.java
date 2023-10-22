@@ -26,6 +26,7 @@ public class TestChangelogs {
     public static final String BASIC = readTestFile("CHANGELOG-basic.md");
     public static final String UNRELEASED = readTestFile("CHANGELOG-withUnreleased.md");
     public static final String YANKED = readTestFile("CHANGELOG-withYanked.md");
+    public static final String VERSIONS_IN_BRACKETS = readTestFile("CHANGELOG-versionsInBrackets.md");
 
     private static String readTestFile(String testFileName) {
         String filename = listToPath(Arrays.asList(RESOURCES_DIRECTORY, testFileName));
