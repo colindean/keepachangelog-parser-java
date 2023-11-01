@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 public class ChangelogExtractor {
 
-    public static final String VERSION_AND_DATE_SEPARATOR = " - ";
+    public static final String VERSION_AND_DATE_SEPARATOR = " [-–—] ";
     private Document mdNode;
 
     private ChangelogExtractor(Document node) {
