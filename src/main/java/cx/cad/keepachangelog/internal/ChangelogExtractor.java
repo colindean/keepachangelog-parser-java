@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 public class ChangelogExtractor {
 
-    public static final String VERSION_AND_DATE_SEPARATOR = " - ";
+    public static final String VERSION_AND_DATE_SEPARATOR = " [-–—] ";
     private Document mdNode;
 
     private ChangelogExtractor(Document node) {
@@ -107,7 +107,7 @@ public class ChangelogExtractor {
         try {
             builder = builder.version(version).date(date);
         } catch (ParseException e) {
-            throw new MalformedChangelogException(e);
+            throw new MalformedChangelogException(String.format("Error when processing %s", text), e);
         }
 
         Node next = heading.getNext();
