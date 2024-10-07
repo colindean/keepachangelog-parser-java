@@ -1,0 +1,30 @@
+{
+  "name": "Java Development Environment",
+  "image": "eclipse-temurin:8-jdk-slim",
+  "postCreateCommand": "if [ ! -f .gradle-checksum ] || ! cmp -s .gradle-checksum .gradle-temp-checksum; then ./gradlew clean build && ./gradlew --status > .gradle-checksum && ./gradlew --status > .gradle-temp-checksum; fi",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "redhat.java",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-test",
+        "vscjava.vscode-java-dependency",
+        "vscjava.vscode-gradle"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "java.format.enabled": true,
+        "java.codeActionsOnSave.organizeImports": true,
+        "java.errors.incompleteClasspath.severity": "warning"
+      }
+    }
+  },
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=delegated",
+  "runArgs": [
+    "--health-cmd=./gradlew --status --timeout=5s --interval=10s --retries=3"
+  ],
+  "onCreateCommand": "./gradlew init"
+}
