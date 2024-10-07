@@ -1,6 +1,6 @@
 {
   "name": "Java Development Environment",
-  "image": "eclipse-temurin:8-jdk-slim",
+  "image": "eclipse-temurin:17-jdk",
   "postCreateCommand": "if [ ! -f .gradle-checksum ] || ! cmp -s .gradle-checksum .gradle-temp-checksum; then ./gradlew clean build && ./gradlew --status > .gradle-checksum && ./gradlew --status > .gradle-temp-checksum; fi",
   "customizations": {
     "vscode": {
