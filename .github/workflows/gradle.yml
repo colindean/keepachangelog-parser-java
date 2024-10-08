@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   devcontainer:
+    runs-on: ubuntu-latest
     steps:
       - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
