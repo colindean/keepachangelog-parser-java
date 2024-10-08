@@ -26,5 +26,5 @@
   "runArgs": [
     "--health-cmd=./gradlew --status --timeout=5s --interval=10s --retries=3"
   ],
-  "onCreateCommand": "./gradlew init"
+  "onCreateCommand": "./gradlew version"
 }
