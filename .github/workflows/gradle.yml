@@ -15,7 +15,8 @@ jobs:
     steps:
       - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
-        runCmd: ./gradlew build
+        with:
+          runCmd: ./gradlew build
 
   build:
     runs-on: ubuntu-latest
