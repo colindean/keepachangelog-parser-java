@@ -5,7 +5,7 @@
   },
   "updateRemoteUserUID": false,
   "remoteUser": "vscode",
-  "postCreateCommand": "if [ ! -f .gradle-checksum ] || ! cmp -s .gradle-checksum .gradle-temp-checksum; then ./gradlew clean build && ./gradlew --status > .gradle-checksum && ./gradlew --status > .gradle-temp-checksum; fi",
+  "postCreateCommand": "if [ ! -f .gradle-checksum ] || ! cmp -s .gradle-checksum .gradle-temp-checksum; then ./gradlew clean && ./gradlew --status > .gradle-checksum && ./gradlew --status > .gradle-temp-checksum; fi",
   "postStartCommand": "git config --global --add safe.directory /workspaces",
   "customizations": {
     "vscode": {
