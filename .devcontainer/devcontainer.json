@@ -1,7 +1,12 @@
 {
   "name": "Java Development Environment",
-  "image": "eclipse-temurin:17-jdk",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "updateRemoteUserUID": false,
+  "remoteUser": "vscode",
   "postCreateCommand": "if [ ! -f .gradle-checksum ] || ! cmp -s .gradle-checksum .gradle-temp-checksum; then ./gradlew clean build && ./gradlew --status > .gradle-checksum && ./gradlew --status > .gradle-temp-checksum; fi",
+  "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -25,6 +30,5 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=delegated",
   "runArgs": [
     "--health-cmd=./gradlew --status --timeout=5s --interval=10s --retries=3"
-  ],
-  "onCreateCommand": "./gradlew init"
+  ]
 }
