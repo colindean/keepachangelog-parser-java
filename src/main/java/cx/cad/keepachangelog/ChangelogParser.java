@@ -16,7 +16,7 @@
 package cx.cad.keepachangelog;
 
 
-import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.parser.Parser;
 import cx.cad.keepachangelog.internal.ChangelogExtractor;
 import cx.cad.keepachangelog.internal.FileTools;
