@@ -11,6 +11,8 @@ permissions:
 
 jobs:
   devcontainer:
+    # failure here means the devcontainer click-to-contribute flow is broken
+    name: "Build in devcontainer"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,8 +20,16 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           runCmd: ./gradlew build
-
+  validation:
+    # failure here means the gradle wrapper is not what it should be
+    # and should be reprovisioned
+    name: "Validate Gradle Wrapper components"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gradle/actions/wrapper-validation@v4
   build:
+    # failure here means it's broke, yo
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -29,7 +39,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'gradle'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@v3
-      with:
-        arguments: build
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Assemble the project
+      run: ./gradlew assemble
+    - name: Run the tests
+      run: ./gradlew test
