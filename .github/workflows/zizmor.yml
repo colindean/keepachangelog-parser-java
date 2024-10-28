@@ -1,5 +1,5 @@
 # https://github.com/woodruffw/zizmor
-name: Zizmor GitHub Actions Security Analysis
+name: GitHub Actions Security Analysis
 
 on:
   push:
@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   zizmor:
+    name: Zizmor latest via Cargo
     runs-on: ubuntu-latest
     permissions:
       security-events: write
