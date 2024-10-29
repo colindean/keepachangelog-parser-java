@@ -10,38 +10,64 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  devcontainer:
+    # failure here means the devcontainer click-to-contribute flow is broken
+    name: "Build in devcontainer"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
         with:
-          java-version: '8'
-          distribution: 'temurin'
-          cache: 'gradle'
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
+          persist-credentials: false
+      - name: Build and run dev container task
+        uses: devcontainers/ci@v0.3
         with:
-          arguments: build --no-daemon
-
-  publish:
-    name: Publish Artifacts
-    needs: [build]
-    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'ref/heads/master')
+          runCmd: ./gradlew build
+  validation:
+    # failure here means the gradle wrapper is not what it should be
+    # and should be reprovisioned
+    name: "Validate Gradle Wrapper components"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: gradle/actions/wrapper-validation@v4
+  build:
+    # failure here means it's broke, yo
+    name: "Build and test with Gradle"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: '8'
+        java-version: '17'
         distribution: 'temurin'
         cache: 'gradle'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@v3
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Assemble the project
+      run: ./gradlew assemble
+    - name: Run the tests
+      run: ./gradlew test
+  publish:
+    name: "Publish Artifacts"
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'ref/heads/master')
+    steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v4
       with:
-        arguments: build
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Assemble the project
+      run: ./gradlew assemble
     - name: Publish with Gradle
       env:
         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
