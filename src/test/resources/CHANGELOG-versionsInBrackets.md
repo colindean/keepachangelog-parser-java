@@ -22,4 +22,3 @@ This example contains version numbers between brackets
 [Unreleased]: https://wwww.example.com/compare/v1.1.0...HEAD
 
 [1.1.0]: https://www.example.com/compare/v1.0.0...v1.1.0
-
