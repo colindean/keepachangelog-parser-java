@@ -49,8 +49,13 @@ public class ChangelogExtractor {
     }
 
     public String getProjectName() {
-        if (!mdNode.hasChildren() || hasTopHeading(mdNode))
+        boolean noChildren = !mdNode.hasChildren();
+        boolean missingHeadings = !hasTopHeading(mdNode);
+
+        if (noChildren || missingHeadings) {
             throw new MissingHeaderException();
+        }
+
         return getFirstHeadingText(mdNode);
     }
 

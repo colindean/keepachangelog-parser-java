@@ -43,6 +43,12 @@ java {
     }
 }
 
+test {
+	testLogging {
+		events "PASSED", "SKIPPED", "FAILED"
+	}
+}
+
 repositories {
   mavenCentral()
 }
