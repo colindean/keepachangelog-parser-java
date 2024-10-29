@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Build and run dev container task
         uses: devcontainers/ci@v0.3
         with:
@@ -27,12 +29,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: gradle/actions/wrapper-validation@v4
   build:
     # failure here means it's broke, yo
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
