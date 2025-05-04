@@ -34,6 +34,7 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v4
   build:
     # failure here means it's broke, yo
+    name: "Build and test with Gradle"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -51,3 +52,26 @@ jobs:
       run: ./gradlew assemble
     - name: Run the tests
       run: ./gradlew test
+  publish:
+    name: "Publish Artifacts"
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'ref/heads/master')
+    steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Assemble the project
+      run: ./gradlew assemble
+    - name: Publish with Gradle
+      env:
+        ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+        ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
+        ORG_GRADLE_PROJECT_signingKey: ${{ secrets.PGP_SECRET }}
+        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.PGP_PASSPHRASE }}
+      run: ./gradlew publishToSonatype --no-daemon
