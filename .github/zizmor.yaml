@@ -1,0 +1,7 @@
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        actions/checkout: hash-pin
+        actions/*: ref-pin
+        devcontainers/ci: ref-pin
