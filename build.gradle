@@ -7,9 +7,12 @@ buildscript {
   }
 }
 
+/*
+// TODO: restore license checking if ever I work on this more
 plugins {
   id "com.github.hierynomus.license"  version "0.16.1"
 }
+*/
 
 ext {
   //semver-git config
@@ -111,6 +114,8 @@ jar {
   from "LICENSE.md"
 }
 
+/*
+// TODO: restore license checking if ever I work on this more
 license {
   ext.year = Calendar.getInstance().get(Calendar.YEAR)
   ext.copyright = 'Colin Dean'
@@ -118,6 +123,7 @@ license {
   strictCheck true
   skipExistingHeaders true
 }
+*/
 
 /*
 publishing {
