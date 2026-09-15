@@ -10,7 +10,7 @@ buildscript {
 /*
 // TODO: restore license checking if ever I work on this more
 plugins {
-  id "com.github.hierynomus.license"  version "0.16.1"
+  id "dev.yumi.gradle.licenser" version "4.0.+"
 }
 */
 
@@ -118,11 +118,11 @@ jar {
 /*
 // TODO: restore license checking if ever I work on this more
 license {
-  ext.year = Calendar.getInstance().get(Calendar.YEAR)
-  ext.copyright = 'Colin Dean'
-  header = file('.copyright_header')
-  strictCheck true
-  skipExistingHeaders true
+  //ext.year = Calendar.getInstance().get(Calendar.YEAR)
+  //ext.copyright = 'Colin Dean'
+  rule(file(".copyright_header"))
+  //strictCheck true
+  //skipExistingHeaders true
 }
 */
 
