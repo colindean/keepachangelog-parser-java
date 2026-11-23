@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Internal packages are no longer included in documentation.
 
+### Fixed
+
+* Changelog files are read as UTF-8 regardless of the platform's default encoding, so en and em dashes between the version and date work on Windows.
+
 ## 0.1.3 - 2017-06-08
 
 ### Added

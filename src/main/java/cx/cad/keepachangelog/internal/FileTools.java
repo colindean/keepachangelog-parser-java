@@ -17,6 +17,7 @@ package cx.cad.keepachangelog.internal;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class FileTools {
 
     public static String readFile(File file) {
         try {
-            return new String(Files.readAllBytes(file.toPath()));
+            return new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(String.format("Something happened while loading %s", file.getAbsolutePath()), e);
         }
