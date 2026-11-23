@@ -43,14 +43,16 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
      */
     static public String EXPECTED_DATE_FORMAT = "yyyy-MM-dd";
     private Version version;
+    private String versionText;
     private Date date;
     private SortedSet<ChangelogSection> sections = new TreeSet<>();
     private String description;
     private boolean isUnreleased;
     private boolean wasYanked;
 
-    private ChangelogEntry(Version version, Date date, String description, boolean isUnreleased, boolean wasYanked, Set<ChangelogSection> sections) {
+    private ChangelogEntry(Version version, String versionText, Date date, String description, boolean isUnreleased, boolean wasYanked, Set<ChangelogSection> sections) {
         this.version = version;
+        this.versionText = versionText;
         this.date = date;
         this.description = description;
         this.isUnreleased = isUnreleased;
@@ -59,12 +61,13 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
     }
 
     /**
-     * Retrieve the version number of the entry
+     * Retrieve the version number of the entry as written in the changelog,
+     * e.g. "1.2.3", or "5.11" for a version without a patch number.
      *
      * @return the version as a string or "Unreleased"
      */
     public String getVersion() {
-        return isUnreleased ? "Unreleased" : version.toString();
+        return isUnreleased ? "Unreleased" : versionText;
     }
 
     /**
@@ -138,6 +141,7 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
 
     public static class Builder {
         private Version version;
+        private String versionText;
         private Date date;
         private SortedSet<ChangelogSection> sections = new TreeSet<>();
         private String description;
@@ -148,11 +152,21 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
 
         public Builder() {}
 
+        /**
+         * Sets the version of the entry. Besides full Semantic Versioning
+         * versions, versions without a minor or patch number such as "5.11"
+         * or "5" are accepted. They're ordered as if the missing numbers were
+         * 0 but {@link ChangelogEntry#getVersion()} returns them as written.
+         *
+         * @param version the version, or null or "Unreleased" for an unreleased entry
+         * @return this builder
+         */
         public Builder version(String version) {
             if(version == null || "Unreleased".equals(version)){
                 return setUnreleased();
             } else {
-                this.version = Version.valueOf(version);
+                this.version = Version.parse(version, false);
+                this.versionText = version;
                 return this;
             }
         }
@@ -179,7 +193,7 @@ public class ChangelogEntry implements Comparable<ChangelogEntry> {
             return this;
         }
         public ChangelogEntry build() {
-            return new ChangelogEntry(version, date, description, isUnreleased, wasYanked, sections);
+            return new ChangelogEntry(version, versionText, date, description, isUnreleased, wasYanked, sections);
         }
     }
 }

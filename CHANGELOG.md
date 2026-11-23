@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+* Versions without a minor or patch number, such as `5.11` or `5`, are accepted and returned as written.
+
 ### Changed
 
 * Include more details about failures when parsing versions with dates.
