@@ -46,6 +46,12 @@ java {
     }
 }
 
+// Sources contain non-ASCII characters, e.g. the en and em dashes in
+// ChangelogExtractor, so don't depend on the platform's default encoding.
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = 'UTF-8'
+}
+
 test {
 	testLogging {
 		events "PASSED", "SKIPPED", "FAILED"

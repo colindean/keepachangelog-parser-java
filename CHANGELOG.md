@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+* Versions without a minor or patch number, such as `5.11` or `5`, are accepted and returned as written.
+
 ### Changed
 
 * Include more details about failures when parsing versions with dates.
@@ -14,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 * Internal packages are no longer included in documentation.
+
+### Fixed
+
+* Changelog files are read as UTF-8 regardless of the platform's default encoding, so en and em dashes between the version and date work on Windows.
 
 ## 0.1.3 - 2017-06-08
 
